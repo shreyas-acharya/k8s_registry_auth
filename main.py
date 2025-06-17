@@ -27,7 +27,9 @@ def _create_kubernetes_secrets(
         token: str = file.read()
 
     configuration = kubernetes.client.Configuration(
-        host=k8s_host, api_key=token, api_key_prefix="Bearer"
+        host=k8s_host,
+        api_key={"authorization": token},
+        api_key_prefix={"authorization": "Bearer"},
     )
     configuration.verify_ssl = True
     configuration.ssl_ca_cert = ca_cert_path
