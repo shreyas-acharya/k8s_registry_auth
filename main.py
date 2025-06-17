@@ -20,12 +20,14 @@ def _generate_docker_configuration(registry_ids: list[str]) -> dict:
     return docker_configuration
 
 
-def _create_kubernetes_secrets(token_path: str, ca_cert_path: str) -> None:
+def _create_kubernetes_secrets(
+    k8s_host: str, token_path: str, ca_cert_path: str
+) -> None:
     with Path.open(Path(token_path)) as file:
         token: str = file.read()
 
     configuration = kubernetes.client.Configuration(
-        api_key=token, api_key_prefix="Bearer"
+        host=k8s_host, api_key=token, api_key_prefix="Bearer"
     )
     configuration.verify_ssl = True
     configuration.ssl_ca_cert = ca_cert_path
@@ -46,7 +48,11 @@ def main() -> None:
     docker_configuration: dict = _generate_docker_configuration(
         configuration.REGISTRY_IDS
     )
-    _create_kubernetes_secrets(configuration.SA_TOKEN_FILE, configuration.CA_CERT_FILE)
+    _create_kubernetes_secrets(
+        configuration.K8S_HOST,
+        configuration.SA_TOKEN_FILE,
+        configuration.CA_CERT_FILE,
+    )
 
 
 if __name__ == "__main__":

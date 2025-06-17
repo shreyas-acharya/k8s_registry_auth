@@ -24,6 +24,7 @@ class Configuration(BaseModel):
             _split_comma_seperated_string,
         ),
     ]
+    K8S_HOST: str
     SECRET_NAME: str
     SA_TOKEN_FILE: str = Field(
         default="/var/run/secrets/kubernetes.io/serviceaccount/token"
