@@ -25,9 +25,9 @@ class Configuration(BaseModel):
         ),
     ]
     SECRET_NAME: str
-    AWS_ROLE_ARN: str
-    AWS_ROLE_SESSION_NAME: str
-    AWS_WEB_IDENTITY_TOKEN_FILE: str = Field(
-        default="/var/run/secrets/kubernetes.io/serviceaccount/token",
+    SA_TOKEN_FILE: str = Field(
+        default="/var/run/secrets/kubernetes.io/serviceaccount/token"
     )
-    CA_CERT_FILE: str = "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+    CA_CERT_FILE: str = Field(
+        default="/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+    )

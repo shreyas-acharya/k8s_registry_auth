@@ -46,6 +46,7 @@ def main() -> None:
     docker_configuration: dict = _generate_docker_configuration(
         configuration.REGISTRY_IDS
     )
+    _create_kubernetes_secrets(configuration.SA_TOKEN_FILE, configuration.CA_CERT_FILE)
 
 
 if __name__ == "__main__":
