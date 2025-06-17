@@ -1,1 +1,1 @@
-# k8s_registry_auth
+# K8S Registry Auth

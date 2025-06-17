@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "k8s-registry-auth"
+version = "0.1.0"
+description = ""
+authors = ["shreyas-acharya"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+pydantic = "^2.11.7"
+boto3 = "^1.38.37"
+kubernetes = "^33.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
