@@ -11,6 +11,10 @@ on:
 concurrency:
   group: "k8s-registry-auth-push"
 
+permissions:
+  contents: read
+  package: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
