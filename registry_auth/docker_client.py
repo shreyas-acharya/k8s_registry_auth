@@ -2,7 +2,7 @@
 
 import boto3
 
-from src.configuration import Configuration
+from registry_auth.configuration import Configuration
 
 
 def _generate_ecr_docker_configuration(
