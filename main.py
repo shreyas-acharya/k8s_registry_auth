@@ -2,9 +2,9 @@
 
 import os
 
-from src.configuration import Configuration
-from src.docker_client import generate_docker_configuration
-from src.kubernetes_client import KubernetesClient
+from registry_auth.configuration import Configuration
+from registry_auth.docker_client import generate_docker_configuration
+from registry_auth.kubernetes_client import KubernetesClient
 
 
 def main() -> None:
