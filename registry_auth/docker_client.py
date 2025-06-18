@@ -12,7 +12,7 @@ def _generate_ecr_docker_configuration(
     ecr_client = boto3.client("ecr")
     response = ecr_client.get_authorization_token(registryIds=registry_ids)
     for authorization_data in response["authorizationData"]:
-        docker_configuration[authorization_data["proxyEndpoint"]] = {
+        docker_configuration["auths"][authorization_data["proxyEndpoint"]] = {
             "auth": authorization_data["authorizationToken"],
         }
     return docker_configuration
