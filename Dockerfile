@@ -16,6 +16,6 @@ FROM cgr.dev/chainguard/python:latest
 ARG WORKDIR
 WORKDIR ${WORKDIR}
 COPY --from=builder ${WORKDIR}/packages/ .
+COPY src .
 COPY main.py .
-COPY configuration.py .
 ENTRYPOINT ["python3", "main.py"]
