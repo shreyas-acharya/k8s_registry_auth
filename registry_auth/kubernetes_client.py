@@ -43,12 +43,12 @@ class KubernetesClient:
                     _continue=continue_token,
                 )
 
-            for item in response["items"]:
-                if item["metadata"]["name"] == secret_name:
+            for item in response.items:
+                if item.metadata.name == secret_name:
                     return True
 
-            if response["metadata"]["remaining_item_count"]:
-                continue_token = response["metadata"]["_continue"]
+            if response.metadata.remaining_item_count:
+                continue_token = response.metadata._continue
             else:
                 break
 
