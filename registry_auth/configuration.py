@@ -6,7 +6,7 @@ from pydantic import BaseModel, BeforeValidator, Field
 
 
 def _split_comma_seperated_list(value: str) -> list[str]:
-    return [item.strip() for item in value.split(",")]
+    return [item.strip() for item in value.split(",") if item.strip()]
 
 
 def _split_comma_seperated_dictionary(value: str) -> dict[str, str]:
