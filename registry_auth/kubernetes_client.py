@@ -58,6 +58,8 @@ class KubernetesClient:
         self,
         namespace: str,
         secret_name: str,
+        labels: dict[str, str],
+        annotations: dict[str, str],
         docker_configuration: dict,
     ) -> None:
         """Create kubernetes secret containing the docker configuration."""
@@ -71,6 +73,8 @@ class KubernetesClient:
                 metadata=kubernetes.client.V1ObjectMeta(
                     name=secret_name,
                     namespace=namespace,
+                    annotations=annotations,
+                    labels=labels,
                 ),
                 data={
                     ".dockerconfigjson": base64.b64encode(
@@ -84,6 +88,8 @@ class KubernetesClient:
         self,
         namespace: str,
         secret_name: str,
+        labels: dict[str, str],
+        annotations: dict[str, str],
         docker_configuration: dict,
     ) -> None:
         """Update kubernetes secret."""
@@ -92,6 +98,10 @@ class KubernetesClient:
             secret_name,
             namespace,
             kubernetes.client.V1Secret(
+                metadata=kubernetes.client.V1ObjectMeta(
+                    annotations=annotations,
+                    labels=labels,
+                ),
                 data={
                     ".dockerconfigjson": base64.b64encode(
                         json.dumps(docker_configuration).encode("utf-8"),
