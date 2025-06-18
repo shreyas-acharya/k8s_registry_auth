@@ -10,11 +10,11 @@ def _split_comma_seperated_list(value: str) -> list[str]:
 
 
 def _split_comma_seperated_dictionary(value: str) -> dict[str, str]:
-    return {
-        parts[0].strip(): parts[1].strip()
-        for item in value.split(",")
-        for parts in item.strip().split(":")
-    }
+    items: dict[str, str] = {}
+    for item in value.split(","):
+        parts: list[str] = item.strip().split(":")
+        items[parts[0].strip()] = parts[1].strip()
+    return items
 
 
 class Configuration(BaseModel):
