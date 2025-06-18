@@ -2,9 +2,12 @@
 
 import base64
 import json
+import logging
 from pathlib import Path
 
 import kubernetes
+
+logger = logging.getLogger(__name__)
 
 
 class KubernetesClient:
@@ -12,6 +15,7 @@ class KubernetesClient:
 
     def __init__(self, host: str, token_path: str, ca_cert_path: str) -> None:
         """Initialize KubernetesClient."""
+        logger.debug("Initializing kubernetes client ...")
         with Path.open(Path(token_path)) as file:
             token: str = file.read()
 
@@ -26,10 +30,16 @@ class KubernetesClient:
 
     def __del__(self) -> None:
         """Destructor for KubernetesClient."""
+        logger.debug("Destroying kubernetes client ...")
         self.client.close()
 
     def check_if_secret_exists(self, namespace: str, secret_name: str) -> bool:
         """Check if the secret exists."""
+        logger.debug(
+            "Checking if the secret '%s' exists in the namespace '%s' ...",
+            secret_name,
+            namespace,
+        )
         instance = kubernetes.client.CoreV1Api(self.client)
         continue_token: None | str = None
 
@@ -48,7 +58,7 @@ class KubernetesClient:
                     return True
 
             if response.metadata.remaining_item_count:
-                continue_token = response.metadata._continue
+                continue_token = response.metadata._continue  # noqa: SLF001
             else:
                 break
 
@@ -63,6 +73,11 @@ class KubernetesClient:
         docker_configuration: dict,
     ) -> None:
         """Create kubernetes secret containing the docker configuration."""
+        logger.debug(
+            "Creating the secret '%s' in the namespace '%s' ...",
+            secret_name,
+            namespace,
+        )
         instance = kubernetes.client.CoreV1Api(self.client)
         instance.create_namespaced_secret(
             namespace,
@@ -93,6 +108,11 @@ class KubernetesClient:
         docker_configuration: dict,
     ) -> None:
         """Update kubernetes secret."""
+        logger.debug(
+            "Updating the secret '%s' in the namespace '%s' ...",
+            secret_name,
+            namespace,
+        )
         instance = kubernetes.client.CoreV1Api(self.client)
         instance.patch_namespaced_secret(
             secret_name,

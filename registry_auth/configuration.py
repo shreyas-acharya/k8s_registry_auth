@@ -20,6 +20,8 @@ def _split_comma_seperated_dictionary(value: str) -> dict[str, str]:
 class Configuration(BaseModel):
     """Configuration class."""
 
+    LOG_LEVEL: str = Field(default="INFO", pattern="INFO|DEBUG|ERROR|WARN")
+
     REGISTRY_IDS: Annotated[
         list[str],
         BeforeValidator(
