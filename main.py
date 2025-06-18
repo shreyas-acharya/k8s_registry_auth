@@ -30,12 +30,16 @@ def main() -> None:
             kubernetes_client.update_docker_secret(
                 namespace,
                 configuration.SECRET_NAME,
+                configuration.LABELS,
+                configuration.ANNOTATIONS,
                 docker_configuration,
             )
         else:
             kubernetes_client.create_docker_secret(
                 namespace,
                 configuration.SECRET_NAME,
+                configuration.LABELS,
+                configuration.ANNOTATIONS,
                 docker_configuration,
             )
 
